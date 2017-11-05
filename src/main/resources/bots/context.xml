@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<context>
+    <!-- 用户标识上下文的唯一ID -->
+    <bot name="id" value="test_cases"/>
+
+    <!-- 加载内容，不可变属性 -->
+    <bot name="output" value="Logs/gossip.txt"/>
+    <bot name="randomSeed" value="1"/>
+    <bot name="series" value="Alpha"/>
+    <bot name="version" value="0.7.5 Alpha"/>
+
+    <!-- 可变属性 -->
+    <set name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+    <set name="name" value="Dear friend"/>
+    <set name="me" value="小明"/>
+    <set name="engine" value="ChatterBean"/>
+    <set name="topic" value="*"/>
+</context>

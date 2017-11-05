@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 定义什么是句子，即句子的结束符。 -->
+<splitters>
+    <!-- EN -->
+    <splitter value="..." type="sentence"/>
+    <splitter value="." type="sentence"/>
+    <splitter value="!" type="sentence"/>
+    <splitter value="?" type="sentence"/>
+    <splitter value=";" type="sentence"/>
+    <splitter value="," type="word"/>
+    <splitter value=":" type="word"/>
+    <!-- CN -->
+    <splitter value="......" type="sentence"/>
+    <splitter value="。" type="sentence"/>
+    <splitter value="！" type="sentence"/>
+    <splitter value="？" type="sentence"/>
+    <splitter value="；" type="sentence"/>
+    <splitter value="，" type="word"/>
+    <splitter value="：" type="word"/>
+</splitters>

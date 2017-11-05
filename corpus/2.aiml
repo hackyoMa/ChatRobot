@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<aiml>
+    <category>
+        <pattern>保修</pattern>
+        <template>本店目前在售的所有商品均享有三年保修。</template>
+    </category>
+    <category>
+        <pattern>服务</pattern>
+        <template>本店出售的商品均为专柜正品，出现任何质量问题均由本店承担。</template>
+    </category>
+    <category>
+        <pattern>快递</pattern>
+        <template>默认发送顺丰物流，不支持指定物流。</template>
+    </category>
+    <category>
+        <pattern>安全</pattern>
+        <template>请勿随意接收任何来源不明的文件，请勿随意点击任何来源不明的链接。涉及资金往来的事项请务必仔细核对资金往来信息。</template>
+    </category>
+    <category>
+        <pattern>承诺</pattern>
+        <template>凡使用支付宝服务付款购买本店商品，若存在质量问题或与描述不符，本店支持退换货服务并承担来回邮费！</template>
+    </category>
+    <category>
+        <pattern>生鲜区在哪</pattern>
+        <template>超市最东南角处哦。</template>
+    </category>
+    <category>
+        <pattern>退货</pattern>
+        <template>30天内可以退货</template>
+    </category>
+</aiml>

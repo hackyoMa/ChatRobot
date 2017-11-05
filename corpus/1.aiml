@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<aiml>
+    <category>
+        <pattern>谢谢你</pattern>
+        <template>不用谢哦</template>
+    </category>
+    <category>
+        <pattern>再见</pattern>
+        <template>bye~</template>
+    </category>
+    <category>
+        <pattern>你好</pattern>
+        <template>你好呀！</template>
+    </category>
+    <category>
+        <pattern>很高兴见到你</pattern>
+        <template>谢谢你。</template>
+    </category>
+</aiml>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="cmn-Hans">
+<head>
+    <meta charset="UTF-8"/>
+    <title>小明智能导购机器人</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="author" content="hackyo"/>
+    <meta name="Keywords" content="小明，聊天，导购，智能，机器人，聊天导购机器人"/>
+    <meta name="Description" content="小明是一个智能聊天导购机器人。"/>
+    <link rel="icon" sizes="any" href="img/robot.svg"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/wangEditor.min.css"/>
+    <link rel="stylesheet" href="css/horsey.min.css"/>
+    <link rel="stylesheet" href="css/chatBubble.min.css"/>
+    <link rel="stylesheet" href="css/loading.min.css"/>
+    <link rel="stylesheet" href="css/style.min.css"/>
+
+    <!-- 空闲时预加载可能会使用的资源 -->
+    <link rel="prefetch" href="img/error.svg"/>
+    <link rel="prefetch" href="img/modify.svg"/>
+    <link rel="prefetch" href="img/remove.svg"/>
+    <link rel="prefetch" href="img/user.svg"/>
+    <link rel="prefetch" href="img/view.svg"/>
+    <link rel="prefetch" href="img/complete.svg"/>
+    <link rel="prefetch" href="img/star-full.svg"/>
+    <link rel="prefetch" href="img/load.svg"/>
+    <link rel="prefetch" href="fonts/icomoon.eot"/>
+    <link rel="prefetch" href="fonts/icomoon.svg"/>
+    <link rel="prefetch" href="fonts/icomoon.ttf"/>
+    <link rel="prefetch" href="fonts/icomoon.woff"/>
+    <link rel="prefetch" href="js/highlight.min.js"/>
+
+</head>
+<body onresize="response()">
+
+<!-- 判断浏览器是否为可用版本 -->
+<!--[if lte IE 9]>
+<div style="width: 100%;font-size: 2em;background-color: #F0AD4E;text-align: center;">
+    <p>无法正常访问，建议<a href="http://chrome.360.cn/">立即升级</a>您的浏览器到最新版本！</p>
+</div>
+<![endif]-->
+
+<div class="container" id="chatBody">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="padding-left: 0; padding-right: 0;">
+
+            <!-- 顶部标题栏 -->
+            <div class="text-center" style="background-color: #F0AD4E;padding-top: 3px;padding-bottom: 3px;">
+                <button id="indexBtn" class="btn btn-default pull-left hidden"
+                        style="margin-top: 4px;border-radius: 0;border-width: 0;" type="button" onclick="returnIndex()">
+                    首页
+                </button>
+                <span style="color: #FFFFFF; font-size: 2em; font-weight: bold;">小明<span id="sellerName"
+                                                                                         style="font-size: 0.5em;"
+                                                                                         class="hidden">（店铺：null）</span></span>
+                <button id="openAdminBtn" class="btn btn-default pull-right hidden"
+                        style="margin-top: 4px;border-radius: 0;border-width: 0;" type="button"
+                        onclick="openAdminManage()">管理
+                </button>
+            </div>
+
+            <!-- 中部聊天信息栏 -->
+            <div class="bubbleBox" id="chatBox"></div>
+
+            <div style="height: 34px;background-color: #F5F5F5;" class="text-center">
+                <div class="input-group">
+                    <div class="input-group-btn btn-group dropup">
+                        <button id="provinceBtn" type="button" class="btn btn-default dropdown-toggle"
+                                style="border-radius: 0;" data-toggle="dropdown" aria-expanded="false">
+                            发货地&nbsp;<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0);" onclick="chooseProvince(this)">发货地</a></li>
+                            <li><a href="javascript:void(0);" onclick="chooseProvince(this)">江浙沪</a></li>
+                            <li><a href="javascript:void(0);" onclick="chooseProvince(this)">珠三角</a></li>
+                            <li><a href="javascript:void(0);" onclick="chooseProvince(this)">京津冀</a></li>
+                            <li><a href="javascript:void(0);" onclick="chooseProvince(this)">东三省</a></li>
+                            <li><a href="javascript:void(0);" onclick="chooseProvince(this)">港澳台</a></li>
+                            <li>
+                                <div class="panel panel-default" style="margin: 0;">
+                                    <div class="panel-heading" id="eastChina">
+                                        <h4 class="panel-title">
+                                            <a onclick="selectArea(this)" data-toggle="collapse"
+                                               href="javascript:void(0);" aria-expanded="false"
+                                               aria-controls="eastChinaGroup">华东</a>
+                                        </h4>
+                                    </div>
+                                    <div id="eastChinaGroup" class="panel-collapse collapse" aria-labelledby="eastChina"
+                                         aria-expanded="false">
+                                        <div class="panel-body">
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">上海</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">江苏</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">浙江</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">安徽</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">福建</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">江西</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">山东</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">台湾</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="panel panel-default" style="margin: 0;">
+                                    <div class="panel-heading" id="northChina">
+                                        <h4 class="panel-title">
+                                            <a onclick="selectArea(this)" data-toggle="collapse"
+                                               href="javascript:void(0);" aria-expanded="false"
+                                               aria-controls="northChinaGroup">华北</a>
+                                        </h4>
+                                    </div>
+                                    <div id="northChinaGroup" class="panel-collapse collapse"
+                                         aria-labelledby="northChina" aria-expanded="false">
+                                        <div class="panel-body">
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">北京</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">天津</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">山西</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">河北</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">内蒙古</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="panel panel-default" style="margin: 0;">
+                                    <div class="panel-heading" id="centralChina">
+                                        <h4 class="panel-title">
+                                            <a onclick="selectArea(this)" data-toggle="collapse"
+                                               href="javascript:void(0);" aria-expanded="false"
+                                               aria-controls="centralChinaGroup">华中</a>
+                                        </h4>
+                                    </div>
+                                    <div id="centralChinaGroup" class="panel-collapse collapse"
+                                         aria-labelledby="centralChina" aria-expanded="false">
+                                        <div class="panel-body">
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">河南</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">湖北</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">湖南</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="panel panel-default" style="margin: 0;">
+                                    <div class="panel-heading" id="southChina">
+                                        <h4 class="panel-title">
+                                            <a onclick="selectArea(this)" data-toggle="collapse"
+                                               href="javascript:void(0);" aria-expanded="false"
+                                               aria-controls="southChinaGroup">华南</a>
+                                        </h4>
+                                    </div>
+                                    <div id="southChinaGroup" class="panel-collapse collapse"
+                                         aria-labelledby="southChina" aria-expanded="false">
+                                        <div class="panel-body">
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">广东</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">广西</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">海南</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">香港</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">澳门</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="panel panel-default" style="margin: 0;">
+                                    <div class="panel-heading" id="southWest">
+                                        <h4 class="panel-title">
+                                            <a onclick="selectArea(this)" data-toggle="collapse"
+                                               href="javascript:void(0);" aria-expanded="false"
+                                               aria-controls="southWestGroup">西南</a>
+                                        </h4>
+                                    </div>
+                                    <div id="southWestGroup" class="panel-collapse collapse" aria-labelledby="southWest"
+                                         aria-expanded="false">
+                                        <div class="panel-body">
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">四川</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">贵州</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">云南</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">重庆</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">西藏</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="panel panel-default" style="margin: 0;">
+                                    <div class="panel-heading" id="northWest">
+                                        <h4 class="panel-title">
+                                            <a onclick="selectArea(this)" data-toggle="collapse"
+                                               href="javascript:void(0);" aria-expanded="false"
+                                               aria-controls="northWestGroup">西北</a>
+                                        </h4>
+                                    </div>
+                                    <div id="northWestGroup" class="panel-collapse collapse" aria-labelledby="northWest"
+                                         aria-expanded="false">
+                                        <div class="panel-body">
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">陕西</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">甘肃</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">青海</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">宁夏</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">新疆</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="panel panel-default" style="margin: 0;">
+                                    <div class="panel-heading" id="northEast">
+                                        <h4 class="panel-title">
+                                            <a onclick="selectArea(this)" data-toggle="collapse"
+                                               href="javascript:void(0);" aria-expanded="false"
+                                               aria-controls="northEastGroup">东北</a>
+                                        </h4>
+                                    </div>
+                                    <div id="northEastGroup" class="panel-collapse collapse" aria-labelledby="northWest"
+                                         aria-expanded="false">
+                                        <div class="panel-body">
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">黑龙江</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">吉林</a>
+                                            <a href="javascript:void(0);" onclick="chooseProvince(this)">辽宁</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <input id="lowestPrice" type="number" min="0" step="0.01" class="form-control"
+                           placeholder="最低价&yen;">
+                    <span class="input-group-addon">-</span>
+                    <input id="highestPrice" type="number" min="0" step="0.01" class="form-control"
+                           style="border-radius: 0;" placeholder="最高价&yen;">
+                </div>
+            </div>
+
+            <!-- 中下部热搜栏 -->
+            <div style="height: 44px;overflow: hidden;">
+                <div id="hotSearchBox"
+                     style="background-color: #E5E5E5;height: 62px;overflow-x: auto;overflow-y: hidden;white-space: nowrap;">
+                    <div id="hotSearch">
+                        <div class="text-center">
+                            <img src="img/loading.svg" class="loading" style="width: 31px;height: 31px;" alt="加载图片"/>
+                            <span style="font-size: 1.6em;">&nbsp;请稍后</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部输入信息栏 -->
+            <div class="input-group input-group-lg">
+                <span onclick="openFeaturesList()" class="input-group-addon chatCross"
+                      style="background: #F0AD4E url('img/cross.svg') no-repeat center;"></span>
+                <input class="hidden" type="file" id="imageSearchFile" accept="image/*" onchange="chooseImage(this)"/>
+                <span id="imageSearchBtn" onclick="$('#imageSearchFile').click()" class="input-group-addon chatCross"
+                      style="background: #F0AD4E url('img/image.svg') no-repeat center;"></span>
+                <span id="voiceBtn" onclick="openVoice()" class="input-group-addon chatCross hidden"
+                      style="background: #F0AD4E url('img/voice.svg') no-repeat center;"></span>
+                <input style="border-left-width: 0;" class="form-control" placeholder="找找喜欢的商品呗" id="message"
+                       onkeydown="sendMessageEnter(event)"/>
+                <span class="input-group-btn">
+                    <button onclick="sendMessage()" style="border-radius: 0;" class="btn btn-warning"
+                            type="button">发送</button>
+                </span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 功能列表模态框 -->
+<div class="modal fade" id="featuresListModal" tabindex="-1" aria-labelledby="featuresListModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-left" id="featuresListModalLabel">功能列表</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a href="#recommendTabForModal" data-toggle="tab">推荐</a></li>
+                    <li><a href="#subscriptionTabForModal" data-toggle="tab">收藏</a></li>
+                    <li><a href="#historyTabForModal" data-toggle="tab">历史</a></li>
+                </ul>
+                <div id="featuresTabContentForModal" class="tab-content">
+
+                    <!-- 推荐标签栏 -->
+                    <div class="tab-pane fade in active" id="recommendTabForModal" style="margin: 10px 0;">
+                        <div class="text-center" id="recommendTabValue" style="margin: 10px 0;">
+                            <img src="img/loading.svg" class="loading" style="width: 42px;height: 42px;"
+                                 alt="加载图片"/><br/>
+                            <span style="font-size: 2em;">请稍后</span>
+                        </div>
+                    </div>
+
+                    <!-- 收藏标签栏 -->
+                    <div class="tab-pane fade" id="subscriptionTabForModal" style="margin: 10px 0;">
+                        <div class="text-center" id="subscriptionTabValue" style="margin: 10px 0;">
+                            <img src="img/loading.svg" class="loading" style="width: 42px;height: 42px;"
+                                 alt="加载图片"/><br/>
+                            <span style="font-size: 2em;">请稍后</span>
+                        </div>
+                        <nav aria-label="Page navigation" class="text-center hidden" id="subscriptionPageNav">
+                            <ul class="pagination" style="margin: 0;">
+                                <li class="disabled" id="subscriptionPreviousPageLi">
+                                    <a href="javascript:void(0);" aria-label="Previous"
+                                       onclick="refreshSubscription('previous')">
+                                        <span>&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="disabled" id="subscriptionFirstPageLi"
+                                    onclick="refreshSubscription('first')"><a href="javascript:void(0);">1</a></li>
+                                <li class="disabled"><a href="javascript:void(0);">···</a></li>
+                                <li class="active"><a href="javascript:void(0);" id="subscriptionPage">1</a></li>
+                                <li class="disabled"><a href="javascript:void(0);">···</a></li>
+                                <li class="disabled" id="subscriptionLastPageLi" onclick="refreshSubscription('last')">
+                                    <a href="javascript:void(0);" id="subscriptionLastPage">1</a></li>
+                                <li class="disabled" id="subscriptionNextPageLi">
+                                    <a href="javascript:void(0);" aria-label="Next"
+                                       onclick="refreshSubscription('next')">
+                                        <span>&raquo;</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" onclick="refreshSubscription('refresh')">
+                                        <span>
+                                            <img src="img/refresh.svg" style="height: 14px;" alt="刷新图标"/>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- 历史标签栏 -->
+                    <div class="tab-pane fade" id="historyTabForModal">
+                        <div class="text-center" id="historyTabValue" style="margin: 10px 0;">
+                            <img src="img/loading.svg" class="loading" style="width: 42px;height: 42px;"
+                                 alt="加载图片"/><br/>
+                            <span style="font-size: 2em;">请稍后</span>
+                        </div>
+                        <nav aria-label="Page navigation" class="text-center hidden" id="historyPageNav">
+                            <ul class="pagination" style="margin: 0;">
+                                <li class="disabled" id="historyPreviousPageLi">
+                                    <a href="javascript:void(0);" aria-label="Previous"
+                                       onclick="refreshHistory('previous')">
+                                        <span>&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="disabled" id="historyFirstPageLi" onclick="refreshHistory('first')"><a
+                                        href="javascript:void(0);">1</a></li>
+                                <li class="disabled"><a href="javascript:void(0);">···</a></li>
+                                <li class="active"><a href="javascript:void(0);" id="historyPage">1</a></li>
+                                <li class="disabled"><a href="javascript:void(0);">···</a></li>
+                                <li class="disabled" id="historyLastPageLi" onclick="refreshHistory('last')"><a
+                                        href="javascript:void(0);" id="historyLastPage">1</a></li>
+                                <li class="disabled" id="historyNextPageLi">
+                                    <a href="javascript:void(0);" aria-label="Next" onclick="refreshHistory('next')">
+                                        <span>&raquo;</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" onclick="refreshHistory('refresh')">
+                                        <span>
+                                            <img src="img/refresh.svg" style="height: 14px;" alt="刷新图标"/>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 店铺管理模态框 -->
+<div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-left" id="adminModalLabel">店铺管理</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a href="#statisticsTab" data-toggle="tab">统计信息</a></li>
+                    <li><a href="#goodsManageTab" data-toggle="tab">商品管理</a></li>
+                    <li><a href="#headOffSetupTab" data-toggle="tab">拦截设置</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active text-center" id="statisticsTab">
+                        <div id="statisticsDiv" style="margin: 10px 0;">
+                            <img src="img/loading.svg" class="loading" style="width: 42px;height: 42px;"
+                                 alt="加载图片"/><br/>
+                            <span style="font-size: 2em;">请稍后</span>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade text-center" id="goodsManageTab">
+                        <div id="goodsManageDiv" style="margin: 10px 0;">
+                            <img src="img/loading.svg" class="loading" style="width: 42px;height: 42px;"
+                                 alt="加载图片"/><br/>
+                            <span style="font-size: 2em;">请稍后</span>
+                        </div>
+                        <nav aria-label="Page navigation" class="text-center">
+                            <ul class="pagination" style="margin: 0;">
+                                <li class="disabled" id="goodsPreviousPageLi">
+                                    <a href="javascript:void(0);" aria-label="Previous"
+                                       onclick="adminRefreshGoods('previous')">
+                                        <span>&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="disabled" id="goodsFirstPageLi" onclick="adminRefreshGoods('first')"><a
+                                        href="javascript:void(0);">1</a></li>
+                                <li class="disabled"><a href="javascript:void(0);">···</a></li>
+                                <li class="active"><a href="javascript:void(0);" id="goodsPage">1</a></li>
+                                <li class="disabled"><a href="javascript:void(0);">···</a></li>
+                                <li class="disabled" id="goodsLastPageLi" onclick="adminRefreshGoods('last')"><a
+                                        href="javascript:void(0);" id="goodsLastPage">1</a></li>
+                                <li class="disabled" id="goodsNextPageLi">
+                                    <a href="javascript:void(0);" aria-label="Next" onclick="adminRefreshGoods('next')">
+                                        <span>&raquo;</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" onclick="adminRefreshGoods('refresh')">
+                                        <span><img src="img/refresh.svg" style="height: 14px;" alt="刷新图标"/></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <button type="button" class="btn btn-warning btn-block" data-toggle="modal"
+                                data-target="#addGoodsModal">新增商品
+                        </button>
+                    </div>
+                    <div class="tab-pane fade text-center" id="headOffSetupTab">
+                        <div id="headOffSetupDiv" style="margin: 10px 0;">
+                            <img src="img/loading.svg" class="loading" style="width: 42px;height: 42px;"
+                                 alt="加载图片"/><br/>
+                            <span style="font-size: 2em;">请稍后</span>
+                        </div>
+                        <button id="addHeadOffBtn" type="button" class="btn btn-warning btn-block hidden"
+                                onclick="adminAddHeadOff()">新增拦截
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onclick="sellersEnterShop('null')">进入店铺</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 新增商品模态框 -->
+<div class="modal fade" id="addGoodsModal" tabindex="-1" aria-labelledby="addGoodsLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-left" id="addGoodsLabel">新增商品</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning text-center" style="margin-top: 10px;">
+                    <strong id="addGoodsMessage">请将商品信息填写完整</strong>
+                </div>
+                <div class="input-group input-group-lg" style="margin-top: 10px;">
+                    <span class="input-group-addon">商品名称</span>
+                    <input id="goodsName" class="form-control" placeholder="请输入商品名称"/>
+                </div>
+                <div class="input-group input-group-lg" style="margin-top: 10px;">
+                    <span class="input-group-addon">商品价格</span>
+                    <input id="goodsPrice" type="number" step="0.01" min="0" class="form-control"
+                           placeholder="请输入商品价格"/>
+                </div>
+                <div class="input-group input-group-lg" style="margin: 10px 0 10px 0;">
+                    <span class="input-group-addon">商品标签</span>
+                    <input id="goodsSort" class="form-control" placeholder="请输入商品分类"/>
+                </div>
+                <div style="width: 100%;">
+                    <div id="richTextEditor" style="height: 400px;">
+                        <p>请在此编辑商品图文介绍...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="addGoodsBtn" type="button" class="btn btn-warning" onclick="sellersAddGoods()">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 今日热门模态框 -->
+<div class="modal fade" id="popularTodayModal" tabindex="-1" aria-labelledby="popularTodayLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-left" id="popularTodayLabel">今日热门</h4>
+            </div>
+            <div class="modal-body">
+                <div id="popularTodayDiv" style="margin: 10px 0;">
+                    <img src="img/loading.svg" class="loading" style="width: 42px;height: 42px;" alt="加载图片"/><br/>
+                    <span style="font-size: 2em;">请稍后</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 查看商品模态框 -->
+<div class="modal fade" id="viewGoodsModal" tabindex="-1" aria-labelledby="viewGoodsLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-left" id="viewGoodsLabel">
+                    查看商品&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img id="viewGoodsSub" style="width: 25px;height: 25px;" class="starIcon" src="img/star.svg"
+                         onclick="subscription(this)" alt="收藏图标"/>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 1.2em;">
+                    <span style="font-weight: bold;">商品名称：</span>
+                    <span id="viewGoodsName"></span>
+                </p>
+                <p style="font-size: 1.2em;">
+                    <span style="font-weight: bold;">商品价格：</span>
+                    <span class="text-danger" id="viewGoodsPrice"></span>
+                </p>
+                <p style="font-size: 1.2em;">
+                    <span style="font-weight: bold;">商品卖家：</span>
+                    <span id="viewGoodsSellers"></span>
+                </p>
+                <p style="font-size: 1.2em;">
+                    <span style="font-weight: bold;">商品标签：</span>
+                    <span id="viewGoodsSort" class="text-muted"></span>
+                </p>
+                <p style="font-size: 1.2em;">
+                    <span style="font-weight: bold;">图文详情</span>
+                </p>
+                <div id="viewGoodsIntroduction"
+                     style="border: 3px solid #757575;border-radius: 10px;padding: 5px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 用户登录注册模态框 -->
+<div class="modal fade" id="userLoginAndRegModal" tabindex="-1" aria-labelledby="userLoginAndRegModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-left" id="userLoginAndRegModalLabel">请选择操作</h4>
+            </div>
+            <div class="modal-body" id="userLoginAndRegForm">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a href="#userLoginTab" data-toggle="tab">登录</a></li>
+                    <li><a href="#userRegTab" data-toggle="tab">注册</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active text-center" id="userLoginTab">
+                        <div class="alert alert-warning" style="margin-top: 10px;">
+                            <strong id="loginErrorMessage">欢迎登陆</strong>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin-top: 10px;">
+                            <span class="input-group-addon">账号</span>
+                            <input class="form-control horseyInput" placeholder="请输入账号" id="loginUserEmail"
+                                   onkeydown="monitorLoginInput(event,this)"/>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin: 10px 0 10px 0;">
+                            <span class="input-group-addon">密码</span>
+                            <input type="password" class="form-control" placeholder="请输入密码" id="loginUserPassword"
+                                   onkeydown="monitorLoginInput(event,this)"/>
+                        </div>
+                        <button class="btn btn-lg btn-warning" type="button" id="loginBtn" onclick="userLogin()">登录
+                        </button>
+                        <button class="btn btn-lg btn-default" type="button" data-dismiss="modal">取消</button>
+                    </div>
+                    <div class="tab-pane fade text-center" id="userRegTab">
+                        <div class="alert alert-warning" style="margin-top: 10px;">
+                            <strong id="regErrorMessage">欢迎注册</strong>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin-top: 10px;">
+                            <span class="input-group-addon">账号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <input class="form-control horseyInput" placeholder="邮箱或手机号" id="regUserEmail"
+                                   onkeydown="monitorRegInput(event,this)"/>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin-top: 10px;">
+                            <input class="form-control" placeholder="请输入验证码" id="vCode"
+                                   onkeydown="monitorRegInput(event,this)"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="getVCodeBtn" onclick="getVCode()">获取验证码</button>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin-top: 10px;">
+                            <span class="input-group-addon">昵称&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <input class="form-control" placeholder="请输入昵称" id="regUserUsername"
+                                   onkeydown="monitorRegInput(event,this)"/>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin-top: 10px;">
+                            <span class="input-group-addon">密码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <input type="password" class="form-control" placeholder="请输入密码" id="regUserPassword"
+                                   onkeydown="monitorRegInput(event,this)"/>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin: 10px 0 10px 0;">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                        id="identityBtn">请选择&nbsp;<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0);" onclick="selectIdentity('select')"
+                                           id="selectIdentitySelect">请选择...</a></li>
+                                    <li><a href="javascript:void(0);" onclick="selectIdentity('merchant')">商户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    </li>
+                                    <li><a href="javascript:void(0);" onclick="selectIdentity('customer')">顾客&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <input class="form-control" placeholder="请选择注册身份..." id="regUserRole"/>
+                        </div>
+                        <button class="btn btn-lg btn-warning" type="button" id="regBtn" onclick="userReg()">注册</button>
+                        <button class="btn btn-lg btn-default" type="button" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-3.2.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/wangEditor.min.js"></script>
+<script src="js/horsey.min.js"></script>
+<script src="js/highcharts.min.js"></script>
+<script src="js/jquery.mousewheel.min.js"></script>
+<script src="js/lrz.all.bundle.min.js"></script>
+<script src="js/index.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+@keyframes loadAnimation {
+    0% {
+        transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg)
+    }
+}
+
+@-moz-keyframes loadAnimation {
+    0% {
+        transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes loadAnimation {
+    0% {
+        transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg)
+    }
+}
+
+@-o-keyframes loadAnimation {
+    0% {
+        transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg)
+    }
+}
+
+.loading {
+    width: 21px;
+    height: 21px;
+    animation: loadAnimation 1s infinite;
+    -moz-animation: loadAnimation 1s infinite;
+    -webkit-animation: loadAnimation 1s infinite;
+    -o-animation: loadAnimation 1s infinite
+}
