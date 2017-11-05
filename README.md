@@ -14,7 +14,7 @@
 │       ├── java
 │       │   ├── bitoflife\chatterbean
 │       │   └── com\chatrobot
-│       ├── resources
+│       └── resources
 ├── web
 ├── ChatRobot.sql
 ├── pom.xml
