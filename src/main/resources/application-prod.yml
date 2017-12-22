@@ -4,7 +4,7 @@ spring:
 server:
   port: 443
   ssl:
-    key-store: classpath:api.spicybar.cn.jks
-    key-store-password: 2h4rkx41mti
+    key-store: classpath:xxxxxxx.jks
+    key-store-password: xxxxxxx
     keyStoreType: JKS
-    keyAlias: api.spicybar.cn
+    keyAlias: xxxxxxx
