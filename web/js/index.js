@@ -1,5 +1,5 @@
 //服务器地址
-var SA = 'https://api.spicybar.cn/';
+var SA = 'https://XXXXXX/';
 //用户状态
 var userStatus = 'offline';
 //页面显示的昵称

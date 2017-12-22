@@ -4,7 +4,7 @@ spring:
 server:
   port: 443
   ssl:
-    key-store: classpath:xxxxxxx.jks
-    key-store-password: xxxxxxx
+    key-store: classpath:XXXXXX.jks
+    key-store-password: XXXXXX
     keyStoreType: JKS
-    keyAlias: xxxxxxx
+    keyAlias: XXXXXX
