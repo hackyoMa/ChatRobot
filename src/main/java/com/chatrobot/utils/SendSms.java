@@ -14,12 +14,12 @@ import com.aliyun.mns.model.RawTopicMessage;
  */
 public final class SendSms {
 
-    final private static String accessId = "VCrvYtHuKLZaIgHb";
-    final private static String accessKey = "4nJ9VvKxSP7ToYEEwAUt5uLXc6fUxO";
+    final private static String accessId = "xxx";
+    final private static String accessKey = "xxx";
     final private static String accessEndpoint = "http://1399816066890230.mns.cn-hangzhou.aliyuncs.com/";
     final private static String accessTopic = "sms.topic-cn-hangzhou";
     final private static String accessSignName = "小明智能导购机器人";
-    final private static String accessReg = "SMS_93395002";
+    final private static String accessReg = "xxx";
 
     //发送注册短信
     public static boolean sendVCode(String to, String vCode) {
